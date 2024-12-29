@@ -1,0 +1,12 @@
+backend:
+  name: github
+  branch: main # change this to your branch
+  repo: zlincoln/resonara-studio-site # change this to your repo
+  site_domain: resonara-studio.com # change this to your domain
+  base_url: https://resonara-studio.com # change this to your prod URL
+  auth_endpoint: oauth
+collections:
+- name: posts
+  identifier_field: name
+media_folder: "static/images/uploads"
+public_folder: "/images/uploads"

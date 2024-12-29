@@ -17,6 +17,8 @@ import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin, lazyImagesRehype
 
 import cloudflare from '@astrojs/cloudflare';
 
+import decapCmsOauth from 'astro-decap-cms-oauth';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const hasExternalScripts = false;
@@ -25,52 +27,43 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 
 export default defineConfig({
   output: 'server',
-  integrations: [
-    tailwind({
-      applyBaseStyles: false,
-    }),
-    sitemap(),
-    mdx(),
-    icon({
-      include: {
-        tabler: ['*'],
-        'flat-color-icons': [
-          'template',
-          'gallery',
-          'approval',
-          'document',
-          'advertising',
-          'currency-exchange',
-          'voice-presentation',
-          'business-contact',
-          'database',
-        ],
+  integrations: [tailwind({
+    applyBaseStyles: false,
+  }), sitemap(), mdx(), icon({
+    include: {
+      tabler: ['*'],
+      'flat-color-icons': [
+        'template',
+        'gallery',
+        'approval',
+        'document',
+        'advertising',
+        'currency-exchange',
+        'voice-presentation',
+        'business-contact',
+        'database',
+      ],
+    },
+  }), ...whenExternalScripts(() =>
+    partytown({
+      config: { forward: ['dataLayer.push'] },
+    })
+  ), compress({
+    CSS: true,
+    HTML: {
+      'html-minifier-terser': {
+        removeAttributeQuotes: false,
       },
-    }),
-
-    ...whenExternalScripts(() =>
-      partytown({
-        config: { forward: ['dataLayer.push'] },
-      })
-    ),
-
-    compress({
-      CSS: true,
-      HTML: {
-        'html-minifier-terser': {
-          removeAttributeQuotes: false,
-        },
-      },
-      Image: false,
-      JavaScript: true,
-      SVG: false,
-      Logger: 1,
-    }),
-
-    astrowind({
-      config: './src/config.yaml',
-    }),
-  ],
+    },
+    Image: false,
+    JavaScript: true,
+    SVG: false,
+    Logger: 1,
+  }), astrowind({
+    config: './src/config.yaml',
+  }), decapCmsOauth({
+    decapCMSSrcUrl: "https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js",
+  })],
 
   image: {
     domains: ['cdn.pixabay.com'],
