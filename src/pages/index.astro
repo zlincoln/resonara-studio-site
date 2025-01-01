@@ -11,6 +11,7 @@ import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
+import ContactForm from '~/components/ContactForm.astro';
 
 const metadata = {
   title: 'AstroWind — Free template for creating websites with Astro + Tailwind CSS',
@@ -36,6 +37,7 @@ const metadata = {
     ]}
     image={{ src: '~/assets/images/resonara-hero-2.webp', alt: 'Resonara Studio Hero Image' }}
   >
+    
     <Fragment slot="title">
       Transforming Busy into
       <span class="text-accent dark:text-white highlight">Profitable</span>
@@ -128,6 +130,12 @@ const metadata = {
 
     <Fragment slot="bg">
       <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Content>
+
+  <Content>
+    <Fragment slot="content">
+      <ContactForm />
     </Fragment>
   </Content>
 
